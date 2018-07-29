@@ -13,14 +13,28 @@ The architecture is based on a messaging queue service, [RabbitMQ](https://www.r
 3. Download the Saiku Report Viewer Server
 ```
 git clone -b development https://github.com/OSBI/saiku-report-viewer-server
+cd saiku-report-viewer-server
+mvn install '-Dmaven.test.skip=true' '-Dmaven.javadoc.skip=true' '-Dcheckstyle.skip=true'
 ```
 4. Download the Saiku Python RPC Client
 ```
-git clone https://github.com/OSBI/python_saiku_report_viewer_server
+git clone https://github.com/OSBI/saiku-python
+cd saiku-pytyon
+pipenv install
 ```
 
 ## Running
 1. Run the RabbitMQ service
-2. Run the Saiku service (org.saiku.reportviewer.server.Main)
-3. Run the Python client (python -m saiku.main)
+2. Run the Saiku service
+```
+cd saiku-report-viewer-server\reporting-viewer\target
+java -jar saiku-report-viewer-server.jar
+```
+3. Run the Python client
+```
+cd saiku-pytyon
+pipenv shell
+cd src
+python -m saiku.main
+```
 4. Open the following URL on a browser: http://127.0.0.1:5002/
