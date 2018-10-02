@@ -9,10 +9,12 @@ from flask import request
 from flask import make_response
 import pika
 import uuid
+import os
 
 class SaikuRpcClient(object):
 	def __init__(self):
-		self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+		r = os.getenv('RABBITMQ_HOST', 'localhost')
+		self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=r))
 		self.channel = self.connection.channel()
 		result = self.channel.queue_declare(exclusive=True)
 		self.callback_queue = result.method.queue

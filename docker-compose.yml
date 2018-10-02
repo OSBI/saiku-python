@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3
+    networks:
+      - saiku
+  backend:
+    build: ../saiku-report-viewer-server/
+    networks:
+      - saiku
+  ui_service:
+    build: .
+    networks:
+      - saiku
+    environment:
+      - RABBITMQ_HOST=backend
+networks:
+  saiku:
